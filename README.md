@@ -22,7 +22,7 @@ This project is a computer vision-based helmet detection system designed to iden
 
 
 # Results
-Achieved reliable detection accuracy through data preprocessing and model tuning
+Achieved reliable detection accuracy of 0.90 through data preprocessing and model tuning
 Demonstrates practical application of AI in health and safety monitoring
 
 
