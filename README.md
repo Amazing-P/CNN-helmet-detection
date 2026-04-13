@@ -19,3 +19,14 @@ This project is a computer vision-based helmet detection system designed to iden
 - OpenCV
 - NumPy
 - Matplotlib
+
+
+# Results
+Achieved reliable detection accuracy through data preprocessing and model tuning
+Demonstrates practical application of AI in health and safety monitoring
+
+
+# Future Improvements
+Real-time video detection
+Deployment as a web or mobile application
+Integration with CCTV system
