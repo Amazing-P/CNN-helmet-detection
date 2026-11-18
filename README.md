@@ -1,8 +1,8 @@
 # CNN-Based Safety Helmet Detection
 
-A computer-vision project exploring automated safety-helmet classification in construction-site imagery. The work compares a Convolutional Neural Network (CNN) with a classical HOG-feature + Support Vector Machine (SVM) pipeline, and includes a frame-by-frame video inference workflow.
+A computer-vision project exploring automated safety-helmet classification in construction-site imagery. The work compares a Convolutional Neural Network (CNN) with a classical Histogram of Oriented Gradients (HOG) + Support Vector Machine (SVM) pipeline, and includes a frame-by-frame video inference workflow.
 
-> **Evaluation note:** The uploaded notebooks contain several experimental iterations and some saved outputs that do not agree with the later screenshots. This README distinguishes the metrics printed by the notebook from separate screenshot runs. Re-run the notebooks from top to bottom before treating any result as a single reproducible benchmark.
+> **Evaluation note:** This README presents the latest classification-report results supplied for the CNN and SVM experiments. The models were evaluated on different sample counts (2,459 for CNN and 728 for SVM), so the figures are useful for describing each experiment but do not constitute a strictly controlled head-to-head benchmark. Re-run both pipelines on the same held-out test set for a directly comparable evaluation.
 
 ## Problem statement
 
@@ -54,8 +54,6 @@ Training experiments include:
 - Accuracy and AUC metrics
 - Early stopping on validation loss, with patience of 7 and restoration of best weights
 
-The notebook contains more than one CNN definition and several older training/evaluation cells. Consequently, the exact model corresponding to each saved screenshot should be confirmed by rerunning a single, clean end-to-end experiment.
-
 ### 2. HOG + Support Vector Machine (SVM)
 
 The classical pipeline:
@@ -75,84 +73,82 @@ The video notebook's saved model path is named `helmetdetect_SVM_Model.keras`, a
 
 ## Results
 
-### CNN — screenshot evaluation
+### CNN classification report
 
-The supplied CNN confusion matrix is:
-
-| Actual \ Predicted | With helmet | Without helmet |
-|---|---:|---:|
-| With helmet | 1,405 | 288 |
-| Without helmet | 192 | 574 |
-
-This matrix contains 2,459 validation examples and corresponds to approximately **80.48% accuracy**. The accompanying classification-report screenshot gives:
+The updated CNN evaluation achieved **85% accuracy** across 2,459 validation/evaluation images.
 
 | Class | Precision | Recall | F1-score | Support |
 |---|---:|---:|---:|---:|
-| With helmet | 0.88 | 0.83 | 0.85 | 1,693 |
-| Without helmet | 0.67 | 0.75 | 0.71 | 766 |
-| **Accuracy** |  |  | **0.80** | **2,459** |
+| With helmet | 0.86 | 0.94 | 0.90 | 1,693 |
+| Without helmet | 0.83 | 0.67 | 0.74 | 766 |
+| **Accuracy** |  |  | **0.85** | **2,459** |
+| Macro average | 0.85 | 0.80 | 0.82 | 2,459 |
+| Weighted average | 0.85 | 0.85 | 0.85 | 2,459 |
 
-Files: `results/cnn_confusion_matrix.png` and `results/cnn_classification_report.png`.
+![Updated CNN classification report](results/cnn_classification_report.svg)
 
-### HOG + SVM — notebook evaluation
+The CNN achieved a recall of **0.94** for the `with_helmet` class. Its recall for `without_helmet` was **0.67`, indicating that some images of people without helmets were not identified by this model.
 
-The uploaded `helmetdetect.ipynb` contains this SVM test result:
+### HOG + SVM classification report
+
+The updated HOG + SVM evaluation achieved **90% accuracy** across 728 test images (the notebook's unrounded accuracy is approximately **89.56%**).
 
 | Class | Precision | Recall | F1-score | Support |
 |---|---:|---:|---:|---:|
 | With helmet | 0.93 | 0.92 | 0.93 | 523 |
 | Without helmet | 0.81 | 0.83 | 0.82 | 205 |
 | **Accuracy** |  |  | **0.90** | **728** |
+| Macro average | 0.87 | 0.88 | 0.87 | 728 |
+| Weighted average | 0.90 | 0.90 | 0.90 | 728 |
 
-The corresponding confusion matrix is:
+![Updated HOG and SVM classification report](results/svm_classification_report.svg)
 
-```text
-[[482, 41],
- [ 35,170]]
-```
+The SVM achieved a recall of **0.83** for the `without_helmet` class, compared with 0.67 for the CNN in its supplied evaluation report.
 
-The notebook reports **89.56% accuracy** on this 728-image test split.
+### Model comparison and interpretation
 
-A separate supplied SVM screenshot reports **89.19% accuracy** on 1,092 examples. It appears to represent a different evaluation run; it is retained as `results/svm_classification_report_additional_run.png` and is not merged with the 728-image notebook result.
+| Evaluation metric | CNN | HOG + SVM |
+|---|---:|---:|
+| Accuracy | 85% | **90%** |
+| Weighted precision | 0.85 | **0.90** |
+| Weighted recall | 0.85 | **0.90** |
+| Weighted F1-score | 0.85 | **0.90** |
+| Recall — with helmet | **0.94** | 0.92 |
+| Recall — without helmet | 0.67 | **0.83** |
+| Evaluation samples | 2,459 | 728 |
 
-### Interpretation and comparison
+Based on these reported experiments, HOG + SVM achieved the higher overall accuracy and weighted F1-score. It also achieved stronger recall for the `without_helmet` class. The CNN achieved slightly higher recall for the `with_helmet` class.
 
-In the supplied evaluations, HOG + SVM achieved higher reported accuracy than the CNN (89.56% versus approximately 80.48%). The SVM also has a higher F1-score for the `without helmet` class in its notebook test report (0.82 versus 0.71 in the CNN screenshot report).
-
-These figures are **not a strictly controlled head-to-head comparison**: the SVM notebook uses a stratified 728-image hold-out test split, while the CNN screenshot uses a 2,459-image validation set. A fair comparison requires both models to be evaluated on the same held-out examples with identical class ordering and preprocessing.
+**Important comparison limitation:** The CNN report covers 2,459 samples, while the SVM report covers 728 samples. The datasets/splits are therefore not identical. The results should not be interpreted as a definitive controlled model comparison until both models are evaluated on the same held-out examples using consistent preprocessing and class ordering.
 
 ## Representative outputs
 
-### CNN confusion matrix
-
-![CNN confusion matrix](results/cnn_confusion_matrix.png)
-
 ### CNN classification report
 
-![CNN classification report](results/cnn_classification_report.png)
+![CNN classification report](results/cnn_classification_report.svg)
 
-### Additional SVM evaluation run
+### HOG + SVM classification report
 
-![SVM classification report](results/svm_classification_report_additional_run.png)
+![HOG + SVM classification report](results/svm_classification_report.svg)
 
 ### Video demonstration
 
-A sample annotated video is included at [`demo/helmet_detection_demo.mp4`](demo/helmet_detection_demo.mp4).
+A sample annotated video is included at `demo/helmet_detection_demo.mp4` if present in the repository.
 
 ## Repository contents
 
 ```text
 .
 ├── README.md
+├── CNN_video_helmet_detect.ipynb
+├── cnnhelmetdetect.ipynb
 ├── notebooks/
 │   ├── helmet_detection_experiments.ipynb
 │   └── video_helmet_detection.ipynb
 ├── results/
-│   ├── cnn_confusion_matrix.png
-│   ├── cnn_classification_report.png
-│   └── svm_classification_report_additional_run.png
-└── demo/
-    └── helmet_detection_demo.mp4
+│   ├── cnn_classification_report.svg
+│   └── svm_classification_report.svg
+└── requirements.txt
 ```
 
 ## Environment and dependencies
@@ -182,7 +178,7 @@ The notebooks currently contain Google Drive-specific paths and experimental/leg
 - Consolidate the notebook into one definitive CNN training and evaluation pipeline.
 - Record the exact dataset citation, version and licence.
 - Save the final model with a clear architecture-specific filename and document its provenance.
-- Add precision, recall, F1-score and confusion-matrix plots generated from the same reproducible evaluation.
+- Generate confusion matrices from the same reproducible evaluation runs as the classification reports.
 - Test across different lighting, camera angles, occlusion and construction-site conditions.
 - Extend from image-level classification to person detection and helmet localisation if required.
 - Consider deployment only after broader validation and safety review.
