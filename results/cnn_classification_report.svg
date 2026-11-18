@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="390" viewBox="0 0 920 390">
+<rect width="920" height="390" fill="#ffffff"/>
+<text x="42" y="52" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#172033">CNN Classification Report</text>
+<text x="42" y="82" font-family="Arial,sans-serif" font-size="15" fill="#536174">Evaluation samples: 2,459</text>
+<rect x="42" y="112" width="836" height="48" rx="5" fill="#edf2f7"/>
+<g font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#263449">
+<text x="66" y="143">Class</text><text x="430" y="143" text-anchor="middle">Precision</text><text x="560" y="143" text-anchor="middle">Recall</text><text x="690" y="143" text-anchor="middle">F1-score</text><text x="810" y="143" text-anchor="middle">Support</text>
+</g>
+<g font-family="Arial,sans-serif" font-size="18" fill="#263449">
+<text x="66" y="204">with_helmet</text><text x="430" y="204" text-anchor="middle">0.86</text><text x="560" y="204" text-anchor="middle">0.94</text><text x="690" y="204" text-anchor="middle">0.90</text><text x="810" y="204" text-anchor="middle">1,693</text>
+<text x="66" y="250">without_helmet</text><text x="430" y="250" text-anchor="middle">0.83</text><text x="560" y="250" text-anchor="middle">0.67</text><text x="690" y="250" text-anchor="middle">0.74</text><text x="810" y="250" text-anchor="middle">766</text>
+</g>
+<path d="M42 270H878" stroke="#d9e0e8"/>
+<g font-family="Arial,sans-serif" font-size="17" fill="#263449"><text x="66" y="310" font-weight="700">Accuracy</text><text x="690" y="310" text-anchor="middle" font-weight="700">0.85</text><text x="810" y="310" text-anchor="middle">2,459</text><text x="66" y="350">Macro avg: 0.85 / 0.80 / 0.82</text><text x="480" y="350">Weighted avg: 0.85 / 0.85 / 0.85</text></g>
+</svg>
