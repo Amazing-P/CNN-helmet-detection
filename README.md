@@ -87,7 +87,7 @@ The updated CNN evaluation achieved **85% accuracy** across 2,459 validation/eva
 
 ![Updated CNN classification report](results/cnn_classification_report.svg)
 
-The CNN achieved a recall of **0.94** for the `with_helmet` class. Its recall for `without_helmet` was **0.67`, indicating that some images of people without helmets were not identified by this model.
+The CNN achieved a recall of **0.94** for the `with_helmet` class. Its recall for `without_helmet` was **0.67**, indicating that some images of people without helmets were not identified by this model.
 
 ### HOG + SVM classification report
 
@@ -130,10 +130,6 @@ Based on these reported experiments, HOG + SVM achieved the higher overall accur
 ### HOG + SVM classification report
 
 ![HOG + SVM classification report](results/svm_classification_report.svg)
-
-### Video demonstration
-
-A sample annotated video is included at `demo/helmet_detection_demo.mp4` if present in the repository.
 
 ## Repository contents
 
